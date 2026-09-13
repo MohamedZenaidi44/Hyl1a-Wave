@@ -1,0 +1,14 @@
+name = "hyl1a-stream-api"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+ALLOWED_ORIGIN = "http://127.0.0.1:5500"
+
+[[r2_buckets]]
+binding = "AUDIO_BUCKET"
+bucket_name = "hyl1a-stream-audio"
+
+# Plus besoin de secrets Spotify : les métadonnées viennent de
+# catalog.json, que tu uploades toi-même dans ce même bucket R2 :
+#   wrangler r2 object put hyl1a-stream-audio/catalog.json --file ./catalog.json

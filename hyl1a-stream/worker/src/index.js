@@ -17,7 +17,11 @@
    surtout il ne dépend plus des changements de politique de Spotify.
 
    Variables (wrangler.toml [vars]) :
-     ALLOWED_ORIGIN -> l'URL de ton front (pour le CORS)
+     ALLOWED_ORIGIN -> optionnel. Une origine unique à autoriser en
+                       plus de la liste ci-dessous (utile pour un
+                       domaine custom, ou pour resserrer temporairement
+                       les accès). Si absente, seules ALLOWED_ORIGINS
+                       et le pattern Vercel comptent.
 
    Binding R2 (wrangler.toml [[r2_buckets]]) :
      AUDIO_BUCKET -> bucket contenant tes mp3 ET ton catalog.json
@@ -41,6 +45,27 @@
 
 const PLAYLIST_CACHE_SECONDS = 60 * 5; // 5 min
 
+// Origines toujours autorisées, en plus de env.ALLOWED_ORIGIN.
+// - Dev local (Live Server, etc.)
+// - Domaine de prod Vercel
+// - N'importe quelle preview Vercel du projet (*.vercel.app), car
+//   Vercel change le sous-domaine de preview à chaque déploiement.
+const STATIC_ALLOWED_ORIGINS = [
+  "http://127.0.0.1:5500",
+  "http://localhost:5500",
+  "https://hyl1a-wave.vercel.app",
+];
+const VERCEL_PREVIEW_PATTERN = /^https:\/\/hyl1a-wave-[a-z0-9]+(-[a-z0-9-]+)?\.vercel\.app$/i;
+
+function isOriginAllowed(origin, env) {
+  if (!origin) return false;
+  if (env.ALLOWED_ORIGIN && origin === env.ALLOWED_ORIGIN) return true;
+  if (env.ALLOWED_ORIGIN === "*") return true;
+  if (STATIC_ALLOWED_ORIGINS.includes(origin)) return true;
+  if (VERCEL_PREVIEW_PATTERN.test(origin)) return true;
+  return false;
+}
+
 function msToTime(ms) {
   if (!Number.isFinite(ms) || ms < 0) return null;
   const totalSec = Math.floor(ms / 1000);
@@ -49,20 +74,23 @@ function msToTime(ms) {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-function corsHeaders(env, extra = {}) {
+function corsHeaders(request, env, extra = {}) {
+  const origin = request.headers.get("Origin");
+  const allowOrigin = isOriginAllowed(origin, env) ? origin : STATIC_ALLOWED_ORIGINS[2];
   return {
-    "Access-Control-Allow-Origin": env.ALLOWED_ORIGIN || "*",
+    "Access-Control-Allow-Origin": allowOrigin,
+    "Vary": "Origin",
     "Access-Control-Allow-Methods": "GET, OPTIONS",
     "Access-Control-Allow-Headers": "Range, Content-Type",
     ...extra,
   };
 }
 
-async function handlePlaylist(env) {
+async function handlePlaylist(request, env) {
   if (!env.AUDIO_BUCKET) {
     return Response.json(
       { error: "Bucket R2 non configuré (binding AUDIO_BUCKET manquant)." },
-      { status: 500, headers: corsHeaders(env) }
+      { status: 500, headers: corsHeaders(request, env) }
     );
   }
 
@@ -74,7 +102,7 @@ async function handlePlaylist(env) {
           "catalog.json introuvable dans le bucket R2. Uploade-le avec : " +
           "wrangler r2 object put hyl1a-stream-audio/catalog.json --file ./catalog.json",
       },
-      { status: 404, headers: corsHeaders(env) }
+      { status: 404, headers: corsHeaders(request, env) }
     );
   }
 
@@ -84,14 +112,14 @@ async function handlePlaylist(env) {
   } catch (err) {
     return Response.json(
       { error: `catalog.json invalide (JSON mal formé) : ${err.message}` },
-      { status: 500, headers: corsHeaders(env) }
+      { status: 500, headers: corsHeaders(request, env) }
     );
   }
 
   if (!Array.isArray(raw)) {
     return Response.json(
       { error: "catalog.json doit être un tableau de morceaux, ex: [ {...}, {...} ]." },
-      { status: 500, headers: corsHeaders(env) }
+      { status: 500, headers: corsHeaders(request, env) }
     );
   }
 
@@ -107,7 +135,7 @@ async function handlePlaylist(env) {
     }));
 
   return Response.json(tracks, {
-    headers: corsHeaders(env, {
+    headers: corsHeaders(request, env, {
       "Cache-Control": `public, max-age=${PLAYLIST_CACHE_SECONDS}`,
     }),
   });
@@ -126,7 +154,7 @@ async function handleAudio(request, env, key) {
   if (!object) {
     return new Response("Fichier introuvable — vérifie qu'il est bien dans R2 sous ce nom.", {
       status: 404,
-      headers: corsHeaders(env),
+      headers: corsHeaders(request, env),
     });
   }
 
@@ -135,7 +163,7 @@ async function handleAudio(request, env, key) {
   headers.set("etag", object.httpEtag);
   headers.set("Accept-Ranges", "bytes");
   headers.set("Cache-Control", "public, max-age=31536000, immutable");
-  for (const [k, v] of Object.entries(corsHeaders(env))) headers.set(k, v);
+  for (const [k, v] of Object.entries(corsHeaders(request, env))) headers.set(k, v);
 
   // Réponse partielle (206) si le lecteur a demandé un "range" (seek)
   if (rangeHeader && object.range) {
@@ -159,11 +187,11 @@ export default {
     const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: corsHeaders(env) });
+      return new Response(null, { headers: corsHeaders(request, env) });
     }
 
     if (url.pathname === "/api/playlist") {
-      return handlePlaylist(env);
+      return handlePlaylist(request, env);
     }
 
     if (url.pathname.startsWith("/audio/")) {

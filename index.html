@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hyl1a Wave</title>
+<style>
+:root{--bg:#000;--pan:#121212;--el:#1f1f1f;--hov:#2a2a2a;--fg:#fff;--mu:#b3b3b3;--acc:#ff7a1a;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:light){:root{--bg:#e9e9ec;--pan:#fff;--el:#f1f1f4;--hov:#e4e4e9;--fg:#111;--mu:#666}}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);display:grid;grid-template-columns:280px 1fr 300px;grid-template-rows:1fr 76px;gap:8px;padding:8px 8px max(8px,env(safe-area-inset-bottom,0px));overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+svg{width:20px;height:20px;fill:currentColor;flex:none}
+.p{background:var(--pan);border-radius:10px;overflow:auto;min-height:0}
+.cv{background:linear-gradient(135deg,var(--a),var(--b));border-radius:6px;flex:none;display:grid;place-items:center;font-weight:800;color:rgba(255,255,255,.55)}
+/* gauche */
+.side{display:flex;flex-direction:column;gap:8px;background:none;overflow:visible}
+.nav{background:var(--pan);border-radius:10px;padding:8px 12px}
+.nav button{display:flex;gap:16px;align-items:center;width:100%;padding:10px 8px;font-weight:700;color:var(--mu)}
+.nav button:hover,.nav button.on{color:var(--fg)}
+.lib{flex:1;display:flex;flex-direction:column;min-height:0}
+.lib h3{padding:16px 16px 8px;font-size:15px;color:var(--mu)}
+.pills{display:flex;gap:8px;padding:0 16px 8px}
+.pill{background:var(--el);padding:6px 12px;border-radius:99px;font-size:13px}.pill:hover{background:var(--hov)}.pill.on{background:var(--fg);color:var(--pan)}
+.libl{overflow:auto;padding:0 8px 8px}
+.li{display:flex;gap:12px;align-items:center;width:100%;padding:8px;border-radius:6px;text-align:left}
+.li:hover{background:var(--el)}.li .cv{width:48px;height:48px}.li small,.card small,.tr small{color:var(--mu);display:block}
+/* centre */
+.main{padding:0 24px 24px;position:relative}
+.top{position:sticky;top:0;z-index:3;display:flex;gap:12px;align-items:center;padding:16px 0;background:var(--pan)}
+.search{flex:1;max-width:380px;background:var(--el);border:0;border-radius:99px;padding:11px 18px;color:var(--fg);font:inherit}
+h1{font-size:28px;margin:4px 0 18px}h2{font-size:22px;margin:30px 0 14px}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.qt{display:flex;align-items:center;gap:12px;background:var(--el);border-radius:6px;overflow:hidden;text-align:left;font-weight:700;padding-right:8px}.qt:hover{background:var(--hov)}.qt .cv{width:56px;height:56px;border-radius:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.card{padding:12px;border-radius:8px;text-align:left;background:var(--el)}.card:hover{background:var(--hov)}.card .cv{aspect-ratio:1;width:100%;margin-bottom:12px;font-size:36px;box-shadow:0 6px 16px rgba(0,0,0,.35)}.card b{display:block}
+.tr{display:grid;grid-template-columns:32px 1fr 50px 50px;gap:12px;align-items:center;width:100%;padding:6px 12px;border-radius:6px;text-align:left}
+.tr:hover{background:var(--el)}.tr.on b{color:var(--acc)}.tr .n,.tr .d{color:var(--mu)}.tr .t{display:flex;gap:12px;align-items:center;min-width:0}.tr .cv{width:40px;height:40px}
+.empty{color:var(--mu);padding:24px 0}
+/* droite */
+.now{padding:16px;display:flex;flex-direction:column;gap:14px}
+.now .cv{width:100%;aspect-ratio:1;font-size:72px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.now h3{font-size:22px;line-height:1.2}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.q{font-weight:700;margin-top:6px}
+/* bas */
+.bar{grid-column:1/-1;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;gap:16px;padding:0 12px}
+.cur{display:flex;gap:12px;align-items:center;min-width:0}.cur .cv{width:56px;height:56px}.cur b,.cur small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cur small{color:var(--mu);font-size:12px}
+.ctl{display:flex;flex-direction:column;align-items:center;gap:6px}.btns{display:flex;align-items:center;gap:16px}
+.ic{color:var(--mu);display:grid;place-items:center;width:32px;height:32px}.ic:hover{color:var(--fg)}.ic.on{color:var(--acc)}
+.pp{background:var(--fg);color:var(--pan);border-radius:50%;width:36px;height:36px}.pp:hover{color:var(--pan);transform:scale(1.06)}
+.heart svg{fill:none;stroke:currentColor;stroke-width:2}.heart.on{color:var(--acc)}.heart.on svg{fill:var(--acc)}
+.seek{display:flex;gap:8px;align-items:center;width:100%;max-width:560px;font-size:11px;color:var(--mu)}
+input[type=range]{flex:1;accent-color:var(--acc);height:4px;cursor:pointer}
+.vol{display:flex;gap:8px;align-items:center;justify-content:flex-end;color:var(--mu)}.vol input{flex:none;width:100px}
+@media(max-width:1100px){body{grid-template-columns:280px 1fr}.now{display:none}}
+@media(max-width:760px){body{grid-template-columns:1fr}.side{display:none}.main{padding:0 14px 14px}.bar{grid-template-columns:1fr auto}.seek,.vol{display:none}.ctl .btns .hm{display:none}.tr{grid-template-columns:28px 1fr 44px}.tr .al{display:none}}
+#yt{position:fixed;right:16px;bottom:96px;width:256px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;z-index:5;box-shadow:0 8px 28px rgba(0,0,0,.5);display:none;background:#000}
+#yt.show{display:block}#yt iframe{width:100%;height:100%;border:0}.now{padding-bottom:170px}
+@media(max-width:760px){#yt{width:190px;right:8px;bottom:90px}}
+</style>
+</head>
+<body>
+<aside class="side">
+  <nav class="nav"><button id="nHome" class="on"><i data-ic="home"></i>Accueil</button><button id="nSearch"><i data-ic="search"></i>Rechercher</button></nav>
+  <section class="p lib"><h3>Ma bibliothèque</h3>
+    <div class="pills"><button class="pill on" data-k="all">Tout</button><button class="pill" data-k="pl">Playlists</button><button class="pill" data-k="ar">Artistes</button><button class="pill" data-k="al">Albums</button></div>
+    <div class="libl" id="lib"></div></section>
+</aside>
+
+<main class="p main">
+  <div class="top"><input class="search" id="q" type="search" placeholder="Que veux-tu écouter ?" aria-label="Rechercher"></div>
+  <div id="view"></div>
+</main>
+
+<aside class="p now" id="now"></aside>
+
+<footer class="bar">
+  <div class="cur"><div class="cv" id="bCv"></div><div style="min-width:0"><b id="bT"></b><small id="bA"></small></div><button class="ic heart" id="bLike" aria-label="Favori"><i data-ic="heart"></i></button></div>
+  <div class="ctl">
+    <div class="btns">
+      <button class="ic hm" id="shuf" aria-label="Aléatoire"><i data-ic="shuffle"></i></button>
+      <button class="ic" id="prev" aria-label="Précédent"><i data-ic="prev"></i></button>
+      <button class="ic pp" id="pp" aria-label="Lecture / pause"></button>
+      <button class="ic" id="next" aria-label="Suivant"><i data-ic="next"></i></button>
+      <button class="ic hm" id="rep" aria-label="Répéter"><i data-ic="repeat"></i></button>
+    </div>
+    <div class="seek"><span id="tc">0:00</span><input type="range" id="sk" min="0" max="100" step="1" value="0" aria-label="Progression"><span id="td">0:00</span></div>
+  </div>
+  <div class="vol"><i data-ic="vol"></i><input type="range" id="vl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume"></div>
+</footer>
+
+<div id="yt"><div id="ytp"></div></div>
+
+<script src="app.js"></script>
+</body>
+</html>

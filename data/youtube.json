@@ -1,0 +1,65 @@
+{
+  "tracks": [
+    {
+      "id": "yt:icjnMiv34Lo",
+      "yt": "icjnMiv34Lo",
+      "t": "Je t'haine",
+      "a": "PNL",
+      "al": "Hyl1a",
+      "d": 315
+    },
+    {
+      "id": "yt:fmttOmYMm6Q",
+      "yt": "fmttOmYMm6Q",
+      "t": "Tout s'en va",
+      "a": "Luv Resval",
+      "al": "Hyl1a",
+      "d": 206
+    },
+    {
+      "id": "yt:xX3qrI_tt8s",
+      "yt": "xX3qrI_tt8s",
+      "t": "Sur Paname",
+      "a": "PNL",
+      "al": "Hyl1a",
+      "d": 248
+    },
+    {
+      "id": "yt:pT2Mynyc51A",
+      "yt": "pT2Mynyc51A",
+      "t": "J'suis QLF",
+      "a": "PNL",
+      "al": "Hyl1a",
+      "d": 269
+    },
+    {
+      "id": "yt:uTd-viQd8gI",
+      "yt": "uTd-viQd8gI",
+      "t": "91's",
+      "a": "PNL",
+      "al": "Hyl1a",
+      "d": 238
+    },
+    {
+      "id": "yt:ViCL1jMZNHc",
+      "yt": "ViCL1jMZNHc",
+      "t": "Galatée",
+      "a": "Nekfeu",
+      "al": "Hyl1a",
+      "d": 235
+    }
+  ],
+  "playlists": [
+    {
+      "name": "Hyl1a",
+      "tracks": [
+        "yt:icjnMiv34Lo",
+        "yt:fmttOmYMm6Q",
+        "yt:xX3qrI_tt8s",
+        "yt:pT2Mynyc51A",
+        "yt:uTd-viQd8gI",
+        "yt:ViCL1jMZNHc"
+      ]
+    }
+  ]
+}

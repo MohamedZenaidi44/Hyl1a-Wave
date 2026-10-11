@@ -471,11 +471,100 @@
       "a": "Zame",
       "al": "OST",
       "d": 492
+    },
+    {
+      "id": "yt:TdMuoDG46KU",
+      "yt": "TdMuoDG46KU",
+      "t": "ISLAND: 2006 Aero Ambience | Wii Menu Beach Channel",
+      "a": "Focusyn Audio",
+      "al": "Revision",
+      "d": 7201
+    },
+    {
+      "id": "yt:0sJ4qqIp3kk",
+      "yt": "0sJ4qqIp3kk",
+      "t": "【GamePiano90min】「時の回廊」クロノ・トリガーゆっくり聴く432Hz Breathing Piano Version",
+      "a": "水面こは(Minamo Koha)",
+      "al": "Revision",
+      "d": 5430
+    },
+    {
+      "id": "yt:6tJS7PMNnb0",
+      "yt": "6tJS7PMNnb0",
+      "t": "go to sleep without stress... (animal crossing music w/ water)",
+      "a": "Sleepy Frisk",
+      "al": "Revision",
+      "d": 26104
+    },
+    {
+      "id": "yt:4KbCCeqalqk",
+      "yt": "4KbCCeqalqk",
+      "t": "1 hour of relaxing animal crossing music 💧🌱 slowed w/ reverb + rain",
+      "a": "forest cat 🌙",
+      "al": "Revision",
+      "d": 4637
+    },
+    {
+      "id": "yt:86Ox-hA2Gi4",
+      "yt": "86Ox-hA2Gi4",
+      "t": "the campfire glows beneath the snowfall...",
+      "a": "Patient Scene Recordings",
+      "al": "Revision",
+      "d": 7736
+    },
+    {
+      "id": "yt:RAADp1YxjGc",
+      "yt": "RAADp1YxjGc",
+      "t": "HOME: 2007 Aero Ambience | Windows Vista Center",
+      "a": "Focusyn Audio",
+      "al": "Revision",
+      "d": 7201
+    },
+    {
+      "id": "yt:4ozXwgGFr7k",
+      "yt": "4ozXwgGFr7k",
+      "t": "Zen TV 🌦️ (Frutiger Aero / Vaporwave Mix)",
+      "a": "ArpWire TV",
+      "al": "Revision",
+      "d": 3711
+    },
+    {
+      "id": "yt:I5NTleOZVg8",
+      "yt": "I5NTleOZVg8",
+      "t": "Lucid Skies | Frutiger Aero Ambience",
+      "a": "Dreamfibre",
+      "al": "Revision",
+      "d": 7201
+    },
+    {
+      "id": "yt:BC_SRkn13Yo",
+      "yt": "BC_SRkn13Yo",
+      "t": "𝘴𝘬𝘺 𝘧𝘶𝘭𝘭 𝘰𝘧 𝘴𝘵𝘢𝘳𝘴 ✶⋆.° 1 hour of night & space videogame music to sleep and relax to ⊹.⋆🪐༘ ˖˚",
+      "a": "Elisio 💿",
+      "al": "Revision",
+      "d": 4320
+    },
+    {
+      "id": "yt:y9wC4sRUSBw",
+      "yt": "y9wC4sRUSBw",
+      "t": "𝘤𝘰𝘶𝘳𝘢𝘨𝘦, 𝘱𝘰𝘸𝘦𝘳 & 𝘸𝘪𝘴𝘥𝘰𝘮 (REmix)˚˖𓍢ִ໋`🌿:✧˚ videogame forest music",
+      "a": "Elisio 💿",
+      "al": "Revision",
+      "d": 3927
+    },
+    {
+      "id": "yt:4_HRnitfRl4",
+      "yt": "4_HRnitfRl4",
+      "t": "another 1h of mii music to empty your mind ꉂ(˵˃ ᗜ ˂˵) 🏠💬",
+      "a": "𝘭𝘰𝘰𝘬𝘪𝘯𝘨 𝘧𝘰𝘳 𝘮𝘪𝘪!",
+      "al": "Revision",
+      "d": 3998
     }
   ],
   "playlists": [
     {
       "name": "Rap fr",
+      "pid": "PLIchPb3nek8M",
       "tracks": [
         "yt:icjnMiv34Lo",
         "yt:fmttOmYMm6Q",
@@ -504,6 +593,7 @@
     },
     {
       "name": "OST",
+      "pid": "PLBmmfoNITNxg",
       "tracks": [
         "yt:s9A0xloTEA0",
         "yt:woz5qvDdMRM",
@@ -523,10 +613,7 @@
         "yt:kvnQ_6C8Luw",
         "yt:tTu-Uhlu4RU",
         "yt:xjTZ_GhhcKA",
-        "yt:xjTZ_GhhcKA",
-        "yt:VO7OwIhfBjE",
         "yt:QFvV_zu7PL0",
-        "yt:F7C0aLqNkkA",
         "yt:wkVzYnFzGPo",
         "yt:jSdeEU-LTwE",
         "yt:bZ3ogQjiBcc",
@@ -535,7 +622,6 @@
         "yt:P_kyCU0gwfA",
         "yt:kD2VFmTa9ks",
         "yt:WKLBhjeN27o",
-        "yt:xjTZ_GhhcKA",
         "yt:4DIxrPUnjsU",
         "yt:sihC5l_gIak",
         "yt:f8PDk7uA5aQ",
@@ -545,6 +631,23 @@
         "yt:9h9dEexwFfY",
         "yt:FqpYZNCRqYc",
         "yt:SOILKoB334E"
+      ]
+    },
+    {
+      "name": "Revision",
+      "pid": "PLOZFAWsKKfeU",
+      "tracks": [
+        "yt:TdMuoDG46KU",
+        "yt:0sJ4qqIp3kk",
+        "yt:6tJS7PMNnb0",
+        "yt:4KbCCeqalqk",
+        "yt:86Ox-hA2Gi4",
+        "yt:RAADp1YxjGc",
+        "yt:4ozXwgGFr7k",
+        "yt:I5NTleOZVg8",
+        "yt:BC_SRkn13Yo",
+        "yt:y9wC4sRUSBw",
+        "yt:4_HRnitfRl4"
       ]
     }
   ]

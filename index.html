@@ -39,6 +39,12 @@ body{
   min-height:0
 }
 
+@supports(height:100dvh){
+  body{
+    height:100dvh
+  }
+}
+
 body{
   font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   background:var(--bg);
@@ -390,7 +396,7 @@ h2{
   min-height:0
 }
 
-.now .cv{
+.now > .cv{
   width:100%;
   aspect-ratio:1;
   font-size:72px;
@@ -569,6 +575,409 @@ input[type=range]{
   border:0
 }
 
+
+/* ====== Ajouts : lignes de titres, actions, file d'attente ====== */
+
+.libh{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-right:8px
+}
+
+.libh h3{
+  padding-bottom:8px
+}
+
+.mu{
+  color:var(--mu)
+}
+
+.ic.mini{
+  width:28px;
+  height:28px
+}
+
+.ic.mini svg{
+  width:18px;
+  height:18px
+}
+
+.ic[aria-pressed="true"]{
+  color:var(--acc)
+}
+
+.rep{
+  position:relative
+}
+
+.rep[data-mode="2"]::after{
+  content:"1";
+  position:absolute;
+  right:3px;
+  bottom:2px;
+  font-size:9px;
+  font-weight:800;
+  line-height:1
+}
+
+.cv svg{
+  width:42%;
+  height:42%;
+  fill:#fff
+}
+
+/* ligne de titre : un <div> contenant de vrais boutons */
+
+.tr{
+  grid-template-columns:32px minmax(0,1fr) minmax(0,.5fr) 32px 48px 32px;
+  cursor:default
+}
+
+.tr .t{
+  text-align:left;
+  min-width:0
+}
+
+.tr b,
+.li b{
+  display:block
+}
+
+.tr b,
+.tr small,
+.li b,
+.li small,
+.qt{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+.tr .al{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+.li > span{
+  min-width:0
+}
+
+.tr .d{
+  text-align:right
+}
+
+.tr.q{
+  grid-template-columns:28px minmax(0,1fr) auto
+}
+
+.tr.q.over{
+  outline:2px dashed var(--acc);
+  outline-offset:-2px
+}
+
+.tr.q[draggable="true"]{
+  cursor:grab
+}
+
+.acts{
+  display:flex;
+  gap:2px
+}
+
+.tr .heart:not(.on){
+  opacity:.7
+}
+
+.actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:-8px 0 20px
+}
+
+.pp.big{
+  width:48px;
+  height:48px;
+  background:var(--acc);
+  color:#111
+}
+
+.pp.big svg{
+  width:24px;
+  height:24px
+}
+
+.pp.big:hover{
+  color:#111
+}
+
+.link{
+  color:var(--mu);
+  font-size:12px;
+  text-decoration:underline
+}
+
+.link:hover{
+  color:var(--fg)
+}
+
+.sub{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px
+}
+
+.curbtn{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  min-width:0;
+  text-align:left;
+  flex:1
+}
+
+.curbtn > span:last-child{
+  min-width:0;
+  flex:1
+}
+
+.mprog{
+  display:none
+}
+
+.vol input{
+  width:clamp(60px,8vw,100px)
+}
+
+/* En cours de lecture (plein écran) */
+
+.np{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:var(--pan);
+  display:flex;
+  flex-direction:column;
+  padding:max(12px,env(safe-area-inset-top,0px)) 20px max(16px,env(safe-area-inset-bottom,0px));
+  overflow-y:auto
+}
+
+.np[hidden]{
+  display:none
+}
+
+.np-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-weight:700
+}
+
+.np-body{
+  width:100%;
+  max-width:440px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  padding:12px 0
+}
+
+.np-art{
+  width:min(100%,46vh);
+  aspect-ratio:1;
+  margin:0 auto;
+  font-size:96px;
+  border-radius:8px
+}
+
+.np-body h2{
+  font-size:22px;
+  margin:0;
+  line-height:1.2
+}
+
+.np-body p{
+  color:var(--mu)
+}
+
+.np-seek{
+  max-width:none
+}
+
+.np-btns{
+  justify-content:center;
+  gap:22px
+}
+
+.np-btns .ic{
+  width:40px;
+  height:40px
+}
+
+.np-btns .pp{
+  width:56px;
+  height:56px
+}
+
+.np-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px
+}
+
+/* Navigation basse (mobile) */
+
+.tabs{
+  display:none;
+  grid-column:1/-1;
+  background:var(--pan);
+  border-radius:10px;
+  z-index:20
+}
+
+.tabs button{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  padding:8px 4px;
+  font-size:11px;
+  color:var(--mu)
+}
+
+.tabs button.on{
+  color:var(--fg)
+}
+
+/* Menu contextuel, boîte de dialogue, message */
+
+#menu{
+  position:fixed;
+  z-index:70;
+  min-width:220px;
+  max-width:calc(100vw - 16px);
+  background:var(--el);
+  border:1px solid var(--hov);
+  border-radius:8px;
+  padding:4px;
+  display:flex;
+  flex-direction:column
+}
+
+#menu[hidden]{
+  display:none
+}
+
+#menu button{
+  text-align:left;
+  padding:10px 12px;
+  border-radius:6px
+}
+
+#menu button:hover,
+#menu button:focus-visible{
+  background:var(--hov)
+}
+
+#menu button.danger{
+  color:#ff6b6b
+}
+
+dialog{
+  margin:auto;
+  border:1px solid var(--hov);
+  border-radius:10px;
+  background:var(--el);
+  color:var(--fg);
+  padding:20px;
+  width:min(380px,calc(100vw - 32px))
+}
+
+dialog::backdrop{
+  background:rgba(0,0,0,.6)
+}
+
+dialog h2{
+  font-size:18px;
+  margin:0 0 14px
+}
+
+dialog input{
+  width:100%;
+  background:var(--pan);
+  color:var(--fg);
+  border:1px solid var(--hov);
+  border-radius:6px;
+  padding:10px 12px;
+  font:inherit
+}
+
+dialog ul{
+  list-style:none;
+  padding:0;
+  display:grid;
+  gap:6px
+}
+
+dialog li{
+  display:flex;
+  justify-content:space-between;
+  gap:16px
+}
+
+dialog kbd{
+  background:var(--pan);
+  border-radius:4px;
+  padding:1px 7px;
+  font:inherit;
+  color:var(--mu)
+}
+
+.dact{
+  display:flex;
+  flex-direction:row-reverse;
+  gap:8px;
+  margin-top:16px
+}
+
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:calc(110px + env(safe-area-inset-bottom,0px));
+  transform:translateX(-50%);
+  background:var(--fg);
+  color:var(--pan);
+  padding:9px 16px;
+  border-radius:99px;
+  font-weight:700;
+  z-index:80;
+  opacity:0;
+  pointer-events:none;
+  max-width:calc(100vw - 32px)
+}
+
+#toast.show{
+  opacity:1
+}
+
+.pill{
+  display:inline-block
+}
+
+
+/* Le lecteur YouTube flottant ne doit pas masquer la fin du panneau de droite */
+@media(min-width:1101px){
+  body:has(#yt.show) .now{
+    padding-bottom:176px
+  }
+}
+
 /* Responsive */
 
 @media(max-width:1100px){
@@ -584,20 +993,37 @@ input[type=range]{
 @media(max-width:760px){
   body{
     grid-template-columns:1fr;
-    grid-template-rows:minmax(0,1fr) 76px
+    grid-template-rows:minmax(0,1fr) auto auto;
+    gap:6px
   }
 
   .side{
     display:none
   }
 
+  .tabs{
+    display:flex
+  }
+
   .main{
-    padding:0 14px 100px
+    padding:0 14px 150px
   }
 
   .bar{
-    grid-template-columns:1fr auto;
-    gap:8px
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px;
+    min-height:64px;
+    position:relative;
+    padding:0 8px 0 10px
+  }
+
+  .cur{
+    min-width:0
+  }
+
+  .cur .cv{
+    width:44px;
+    height:44px
   }
 
   .seek,
@@ -605,22 +1031,76 @@ input[type=range]{
     display:none
   }
 
+  .np .seek,
+  .np .vol{
+    display:flex
+  }
+
   .ctl .btns .hm{
     display:none
   }
 
-  .tr{
-    grid-template-columns:28px 1fr 44px
+  .btns{
+    gap:8px
   }
 
-  .tr .al{
+  .mprog{
+    display:block;
+    position:absolute;
+    left:10px;
+    right:10px;
+    bottom:3px;
+    height:2px;
+    background:var(--el);
+    border-radius:2px;
+    overflow:hidden
+  }
+
+  .mprog i{
+    display:block;
+    height:100%;
+    width:0;
+    background:var(--acc)
+  }
+
+  .tr{
+    grid-template-columns:24px minmax(0,1fr) 32px 32px;
+    padding:6px 4px
+  }
+
+  .tr .al,
+  .tr > .d{
     display:none
   }
 
   #yt{
     width:190px;
     right:8px;
-    bottom:90px
+    bottom:calc(150px + env(safe-area-inset-bottom,0px))
+  }
+
+  body.np-open #yt{
+    bottom:auto;
+    top:calc(env(safe-area-inset-top,0px) + 56px);
+    width:150px
+  }
+
+  #toast{
+    bottom:calc(140px + env(safe-area-inset-bottom,0px))
+  }
+
+  #menu{
+    left:0 !important;
+    right:0;
+    bottom:0;
+    top:auto !important;
+    max-width:none;
+    border-radius:14px 14px 0 0;
+    padding:8px 8px max(12px,env(safe-area-inset-bottom,0px))
+  }
+
+  #menu button{
+    padding:14px 12px
   }
 
   .playlist-head .cv{
@@ -636,6 +1116,10 @@ input[type=range]{
     font-size:22px
   }
 }
+
+body.np-open #yt{
+  z-index:60
+}
 </style>
 </head>
 
@@ -644,19 +1128,24 @@ input[type=range]{
 <aside class="side">
 
   <nav class="nav">
-    <button id="nHome" class="on">
+    <button id="nHome" class="on" data-nav="home">
       <i data-ic="home"></i>
       Accueil
     </button>
 
-    <button id="nSearch">
+    <button id="nSearch" data-nav="search">
       <i data-ic="search"></i>
       Rechercher
     </button>
   </nav>
 
   <section class="p lib">
-    <h3>Ma bibliothèque</h3>
+    <div class="libh">
+      <h3>Ma bibliothèque</h3>
+      <button class="ic" data-act="newpl" aria-label="Créer une playlist" title="Créer une playlist">
+        <i data-ic="plus"></i>
+      </button>
+    </div>
 
     <div class="pills">
       <button class="pill on" data-k="all">Tout</button>
@@ -691,18 +1180,15 @@ input[type=range]{
 <footer class="bar">
 
   <div class="cur">
-    <div class="cv" id="bCv"></div>
+    <button class="curbtn" data-act="np" aria-label="Ouvrir « En cours de lecture »">
+      <span class="cv" id="bCv"></span>
+      <span style="min-width:0">
+        <b id="bT"></b>
+        <small id="bA"></small>
+      </span>
+    </button>
 
-    <div style="min-width:0">
-      <b id="bT"></b>
-      <small id="bA"></small>
-    </div>
-
-    <button
-      class="ic heart"
-      id="bLike"
-      aria-label="Favori"
-    >
+    <button class="ic heart" id="bLike" data-act="like" aria-label="Ajouter aux favoris" aria-pressed="false">
       <i data-ic="heart"></i>
     </button>
   </div>
@@ -710,84 +1196,107 @@ input[type=range]{
   <div class="ctl">
 
     <div class="btns">
-
-      <button
-        class="ic hm"
-        id="shuf"
-        aria-label="Aléatoire"
-      >
+      <button class="ic hm" id="shuf" data-act="shuf" aria-label="Aléatoire" aria-pressed="false">
         <i data-ic="shuffle"></i>
       </button>
 
-      <button
-        class="ic"
-        id="prev"
-        aria-label="Précédent"
-      >
+      <button class="ic" id="prev" data-act="prev" aria-label="Précédent">
         <i data-ic="prev"></i>
       </button>
 
-      <button
-        class="ic pp"
-        id="pp"
-        aria-label="Lecture / pause"
-      ></button>
+      <button class="ic pp" id="pp" data-act="pp" aria-label="Lecture"></button>
 
-      <button
-        class="ic"
-        id="next"
-        aria-label="Suivant"
-      >
+      <button class="ic" id="next" data-act="next" aria-label="Suivant">
         <i data-ic="next"></i>
       </button>
 
-      <button
-        class="ic hm"
-        id="rep"
-        aria-label="Répéter"
-      >
+      <button class="ic hm rep" id="rep" data-act="rep" aria-label="Répéter" aria-pressed="false">
         <i data-ic="repeat"></i>
       </button>
-
     </div>
 
     <div class="seek">
-      <span id="tc">0:00</span>
-
-      <input
-        type="range"
-        id="sk"
-        min="0"
-        max="100"
-        step="1"
-        value="0"
-        aria-label="Progression"
-      >
-
-      <span id="td">0:00</span>
+      <span class="tc" id="tc">0:00</span>
+      <input class="sk" type="range" id="sk" min="0" max="100" step="1" value="0" aria-label="Progression">
+      <span class="td" id="td">0:00</span>
     </div>
 
   </div>
 
   <div class="vol">
-    <i data-ic="vol"></i>
-
-    <input
-      type="range"
-      id="vl"
-      min="0"
-      max="1"
-      step="0.01"
-      value="0.7"
-      aria-label="Volume"
-    >
+    <button class="ic" data-act="sleep" aria-label="Minuteur de sommeil" title="Minuteur de sommeil">
+      <i data-ic="moon"></i>
+    </button>
+    <button class="ic" data-act="queue" aria-label="File d'attente" title="File d'attente">
+      <i data-ic="queue"></i>
+    </button>
+    <button class="ic mute" data-act="mute" aria-label="Couper le son"></button>
+    <input class="vl" type="range" id="vl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
   </div>
+
+  <div class="mprog" aria-hidden="true"><i id="mp"></i></div>
 
 </footer>
 
 <div id="yt">
   <div id="ytp"></div>
 </div>
+
+<nav class="tabs" aria-label="Navigation principale">
+  <button data-nav="home" class="on"><i data-ic="home"></i><span>Accueil</span></button>
+  <button data-nav="search"><i data-ic="search"></i><span>Recherche</span></button>
+  <button data-nav="lib"><i data-ic="lib"></i><span>Bibliothèque</span></button>
+  <button data-nav="fav"><i data-ic="heart"></i><span>Favoris</span></button>
+</nav>
+
+<section class="np" id="np" role="dialog" aria-modal="true" aria-label="En cours de lecture" hidden>
+  <div class="np-top">
+    <button class="ic" data-act="npclose" aria-label="Fermer"><i data-ic="down"></i></button>
+    <span>En cours de lecture</span>
+    <button class="ic" data-act="queue" aria-label="File d'attente"><i data-ic="queue"></i></button>
+  </div>
+
+  <div class="np-body">
+    <div class="cv np-art" id="npCv"></div>
+
+    <div class="row">
+      <div style="min-width:0">
+        <h2 id="npT"></h2>
+        <p id="npA"></p>
+      </div>
+      <button class="ic heart" data-act="like" aria-label="Ajouter aux favoris" aria-pressed="false">
+        <i data-ic="heart"></i>
+      </button>
+    </div>
+
+    <div class="seek np-seek">
+      <span class="tc">0:00</span>
+      <input class="sk" type="range" min="0" max="100" step="1" value="0" aria-label="Progression">
+      <span class="td">0:00</span>
+    </div>
+
+    <div class="btns np-btns">
+      <button class="ic" data-act="shuf" aria-label="Aléatoire" aria-pressed="false"><i data-ic="shuffle"></i></button>
+      <button class="ic" data-act="prev" aria-label="Précédent"><i data-ic="prev"></i></button>
+      <button class="ic pp" data-act="pp" aria-label="Lecture"></button>
+      <button class="ic" data-act="next" aria-label="Suivant"><i data-ic="next"></i></button>
+      <button class="ic rep" data-act="rep" aria-label="Répéter" aria-pressed="false"><i data-ic="repeat"></i></button>
+    </div>
+
+    <div class="np-foot">
+      <button class="ic" data-act="sleep" aria-label="Minuteur de sommeil"><i data-ic="moon"></i></button>
+      <span id="sleepInfo" class="mu" aria-live="polite"></span>
+      <div class="vol">
+        <button class="ic mute" data-act="mute" aria-label="Couper le son"></button>
+        <input class="vl" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="menu" role="menu" hidden></div>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script src="app.js"></script>
 

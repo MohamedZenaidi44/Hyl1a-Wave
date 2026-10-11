@@ -1,0 +1,36 @@
+name: Synchroniser YouTube
+
+# Lancement manuel : onglet Actions → « Synchroniser YouTube » → Run workflow.
+# Prérequis : secret de dépôt YT_API_KEY (Settings → Secrets and variables → Actions).
+on:
+  workflow_dispatch:
+    inputs:
+      playlists:
+        description: "Identifiants ou URL de playlists, séparés par des espaces (vide = re-synchroniser les playlists connues)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Synchroniser
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          PLAYLISTS: ${{ inputs.playlists }}
+        run: |
+          set -f
+          node scripts/fetch-youtube.mjs $PLAYLISTS
+      - name: Enregistrer les changements (Vercel redéploie automatiquement)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/youtube.json
+          git diff --cached --quiet || (git commit -m "Synchro YouTube" && git push)

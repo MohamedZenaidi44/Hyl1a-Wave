@@ -22,7 +22,17 @@ if (existsSync(OUT)) {
 data.tracks ||= [];
 data.playlists ||= [];
 
-const inputs = argIds.length ? argIds : data.playlists.map(p => p.pid).filter(Boolean);
+/* Un identifiant de playlist peut être court (ex. PLIchPb3nek8M) ou long (PL + 16/22/32). */
+const looksValid = id => /^[\w-]{10,60}$/.test(id);
+
+const stale = data.playlists.filter(p => !p.pid || !looksValid(p.pid));
+const inputs = argIds.length ? argIds : data.playlists.map(p => p.pid).filter(p => p && looksValid(p));
+
+if (!argIds.length && stale.length) {
+  for (const p of stale) {
+    console.warn(`⚠ « ${p.name} » n'a pas d'identifiant de playlist exploitable. Donne son URL complète une fois pour la corriger ; elle sera re-synchronisée sans argument ensuite.`);
+  }
+}
 
 if (!KEY || !inputs.length) {
   console.error(
@@ -31,9 +41,6 @@ if (!KEY || !inputs.length) {
   );
   process.exit(1);
 }
-
-/* Un identifiant de playlist valide fait 18, 24 ou 34 caractères (PL + 16/22/32). */
-const looksValid = id => /^(PL|UU|LL|FL|RD|OL)[\w-]{16}$|^PL[\w-]{22}$|^PL[\w-]{32}$/.test(id);
 
 const api = async (path, params) => {
   const url = `${BASE}/${path}?${new URLSearchParams({ ...params, key: KEY })}`;
@@ -64,7 +71,7 @@ let done = 0;
 
 for (const pid of [...new Set(inputs)]) {
   if (!looksValid(pid)) {
-    console.warn(`⚠ « ${pid} » (${pid.length} caractères) ne ressemble pas à un identifiant de playlist complet (18, 24 ou 34 caractères). Copie l'intégralité de la valeur après « list= » dans l'URL.`);
+    console.warn(`⚠ « ${pid} » (${pid.length} caractères) ne ressemble pas à un identifiant de playlist. Copie l'intégralité de la valeur après « list= » dans l'URL.`);
   }
 
   let pl;
@@ -101,8 +108,8 @@ for (const pid of [...new Set(inputs)]) {
   }
 
   const entry = { name: pl.snippet.title, pid, tracks: mine };
-  // Même playlist = même pid, ou à défaut même nom (anciennes entrées sans pid) → remplacée, jamais dupliquée
-  const at = data.playlists.findIndex(p => p.pid === pid || (!p.pid && p.name === entry.name));
+  // Même playlist = même pid, ou à défaut même nom (ancienne entrée sans pid ou pid tronqué) → remplacée, jamais dupliquée
+  const at = data.playlists.findIndex(p => p.pid === pid || ((!p.pid || !looksValid(p.pid)) && p.name === entry.name));
   if (at >= 0) data.playlists[at] = entry; else data.playlists.push(entry);
   console.log(`✔ ${entry.name} : ${mine.length} titres`);
   done++;

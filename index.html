@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000" id="themeColor">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hyl1a Wave">
 <title>Hyl1a Wave</title>
 
 <style>
@@ -14,6 +21,7 @@
   --fg:#fff;
   --mu:#b3b3b3;
   --acc:#ff7a1a;
+  --acc-fg:#111;
   padding-top:env(safe-area-inset-top,0px)
 }
 
@@ -220,15 +228,49 @@ svg{
   background:var(--pan)
 }
 
-.search{
+.searchwrap{
+  position:relative;
   flex:1;
   max-width:380px;
+  display:flex
+}
+
+.search{
+  width:100%;
   background:var(--el);
   border:0;
   border-radius:99px;
-  padding:11px 18px;
+  padding:11px 44px 11px 18px;
   color:var(--fg);
   font:inherit
+}
+
+.searchclear{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--hov);
+  color:var(--fg)
+}
+
+.searchclear:hover{
+  background:var(--mu);
+  color:var(--pan)
+}
+
+.searchclear svg{
+  width:16px;
+  height:16px
+}
+
+.searchclear[hidden]{
+  display:none
 }
 
 h1{
@@ -701,7 +743,7 @@ input[type=range]{
   width:48px;
   height:48px;
   background:var(--acc);
-  color:#111
+  color:var(--acc-fg,#111)
 }
 
 .pp.big svg{
@@ -710,7 +752,7 @@ input[type=range]{
 }
 
 .pp.big:hover{
-  color:#111
+  color:var(--acc-fg,#111)
 }
 
 .link{
@@ -939,6 +981,150 @@ dialog kbd{
   color:var(--mu)
 }
 
+dialog .pill{
+  background:var(--pan)
+}
+
+dialog .pill.on{
+  background:var(--fg);
+  color:var(--pan)
+}
+
+dialog .pill:not(.on):hover{
+  background:var(--hov)
+}
+
+dialog.wide{
+  width:min(560px,calc(100vw - 32px))
+}
+
+/* Thèmes */
+
+.tbtn{
+  background:var(--el);
+  border-radius:50%;
+  width:40px;
+  height:40px;
+  color:var(--fg)
+}
+
+.tbtn:hover{
+  background:var(--hov)
+}
+
+.themes{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:10px;
+  max-height:min(56vh,420px);
+  overflow:auto;
+  padding:2px;
+  margin:6px -2px 0
+}
+
+.theme-opt{
+  background:var(--pan);
+  border:2px solid transparent;
+  border-radius:10px;
+  padding:8px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  text-align:left
+}
+
+.theme-opt:hover{
+  background:var(--hov)
+}
+
+.theme-opt.on{
+  border-color:var(--acc)
+}
+
+.theme-opt span{
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+.theme-prev{
+  position:relative;
+  display:block;
+  height:46px;
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid rgba(127,127,127,.25)
+}
+
+.theme-prev b,
+.theme-prev u,
+.theme-prev em{
+  position:absolute;
+  display:block
+}
+
+.theme-prev b{
+  left:5px;
+  top:5px;
+  bottom:5px;
+  width:12px;
+  border-radius:3px
+}
+
+.theme-prev u{
+  left:21px;
+  right:5px;
+  bottom:5px;
+  height:9px;
+  border-radius:3px
+}
+
+.theme-prev em{
+  left:23px;
+  top:7px;
+  width:20px;
+  height:20px;
+  border-radius:4px
+}
+
+.theme-prev.auto{
+  background:linear-gradient(90deg,#000 0 50%,#e9e9ec 50% 100%)
+}
+
+.accrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid var(--hov);
+  font-size:13px;
+  color:var(--mu)
+}
+
+.accrow span{
+  flex:1
+}
+
+.accrow input[type=color]{
+  width:44px;
+  height:32px;
+  flex:none;
+  padding:2px;
+  background:var(--pan);
+  border:1px solid var(--hov);
+  border-radius:6px;
+  cursor:pointer
+}
+
+.dataacts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px
+}
+
 .dact{
   display:flex;
   flex-direction:row-reverse;
@@ -951,6 +1137,9 @@ dialog kbd{
   left:50%;
   bottom:calc(110px + env(safe-area-inset-bottom,0px));
   transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:14px;
   background:var(--fg);
   color:var(--pan);
   padding:9px 16px;
@@ -964,6 +1153,23 @@ dialog kbd{
 
 #toast.show{
   opacity:1
+}
+
+#toast button{
+  color:var(--pan);
+  font-weight:800;
+  text-decoration:underline;
+  text-underline-offset:2px;
+  padding:2px 0;
+  pointer-events:auto
+}
+
+#toast button:hover{
+  opacity:.65
+}
+
+#toast button[hidden]{
+  display:none
 }
 
 .pill{
@@ -1162,13 +1368,24 @@ body.np-open #yt{
 <main class="p main">
 
   <div class="top">
-    <input
-      class="search"
-      id="q"
-      type="search"
-      placeholder="Que veux-tu écouter ?"
-      aria-label="Rechercher"
-    >
+    <div class="searchwrap">
+      <input
+        class="search"
+        id="q"
+        type="search"
+        placeholder="Que veux-tu écouter ?"
+        aria-label="Rechercher"
+      >
+      <button class="searchclear" id="qClear" type="button" aria-label="Effacer la recherche" title="Effacer" hidden>
+        <i data-ic="x"></i>
+      </button>
+    </div>
+    <button class="ic tbtn" data-act="theme" aria-label="Changer de thème" aria-haspopup="dialog" title="Thème (T)">
+      <i data-ic="palette"></i>
+    </button>
+    <button class="ic tbtn" data-act="settings" aria-label="Données et sauvegarde" aria-haspopup="dialog" title="Données et sauvegarde">
+      <i data-ic="settings"></i>
+    </button>
   </div>
 
   <div id="view"></div>
@@ -1296,7 +1513,7 @@ body.np-open #yt{
 
 <div id="menu" role="menu" hidden></div>
 <dialog id="dlg"></dialog>
-<div id="toast" role="status" aria-live="polite"></div>
+<div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button id="toastAct" type="button" hidden>Annuler</button></div>
 
 <script src="app.js"></script>
 
